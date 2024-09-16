@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ced4da;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<div><a href="/logout">Logout</a></div>
+<div class="content">
+    <h2>User information</h2>
+    <div>
+        <div>
+            <h5>About user</h5>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:object="${user}">
+                <td><p th:text="*{id}"></p></td>
+                <td><p th:text="*{firstName}"></p></td>
+                <td><p th:text="*{lastName}"></p></td>
+                <td><p th:text="*{age}"></p></td>
+                <td><p th:text="*{email}"></p></td>
+                <td>
+                    <span th:each="role : *{authorities}"
+                          th:text="${#strings.substring(role.authority, 5)} + ' '"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .error {
+            margin: 5px;
+            color: red;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+        select {
+            width: 100% !important;
+            height: 60px;
+        }
+    </style>
+    <title>Add user</title>
+</head>
+<body>
+<div><a href="/logout">Logout</a></div>
+<form th:action="@{/admin/add}" th:object="${user}" method="post">
+    <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></div>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></div>
+    </div>
+    <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" class="form-control" id="age" th:field="*{age}" required>
+        <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="error"></div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" th:field="*{password}" required>
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+    </div>
+    <div class="form-group">
+        <label for="role">Roles</label>
+        <select class="form-control" multiple id="role" th:field="*{roles}">
+            <option th:each="role : ${roles}" th:text="${#strings.substringAfter(role.getName(), 'ROLE_')}"
+                    th:value="${role.getId()}"></option>
+        </select>
+    </div>
+    <button type="submit">Add User</button>
+</form>
+</body>
+</html>
